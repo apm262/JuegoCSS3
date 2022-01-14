@@ -1,0 +1,60 @@
+.menu{
+    width: 90%; 
+    background-color: yellowgreen; 
+    text-align: center; 
+    font-size: 35px; 
+    height: 100px; 
+    padding: 20px; 
+    /*margin-bottom: 20px;*/
+}
+.menu2{
+    width: 90%; 
+    background-color: yellowgreen; 
+    text-align: center; 
+    font-size: 35px; 
+    height: 60px; 
+    padding: 20px;
+    margin-top: 25px; 
+    /*margin-bottom: 20px;*/
+}
+.cajagrande{
+    width: 99%;
+    height: 1000px;
+    margin: 0;
+    background-color: antiquewhite;
+    padding-top: 35px;
+}
+.cajamedia{
+    width: 1000px;
+    height: 550px;
+    background-color: grey;
+}
+#lienzo{
+    margin-top: 35px;
+}
+
+#cajaformulario {
+    float: left;
+    padding: 20px;
+    border: 1px solid #999999;
+    margin-top: 25px;
+    margin-left:20%;
+}
+
+#cajadatos {
+    float: left;
+    width: 400px;
+    margin-left: 20px;
+    padding: 20px;
+    border: 1px solid #999999;
+    margin-top: 25px;
+}
+
+#clave, #texto { 
+    width: 200px; 
+}
+    
+#cajadatos > div {
+    padding: 5px;
+    border-bottom: 1px solid #999999;
+}

@@ -13,6 +13,18 @@ const KEY_DOWN = 40;
 const KEY_P = 80;
 const KEY_ENTER = 13;
 
+var iBody=new Image();
+var iFood=new Image();
+var iWall=new Image()
+iBody.src='imgs/body.png';
+iFood.src='imgs/fruit.png';
+iWall.src='imgs/wall.png';
+
+var aComer = new Audio();
+var aMorir = new Audio();
+aComer.src = "sounds/chomp.m4a";
+aMorir.src = "sounds/dies.m4a";
+
 const ARRIBA = 0;
 const DERECHA = 1;
 const ABAJO = 2;
@@ -28,10 +40,26 @@ var score = 0;
 
 var gameover = false;
 var wall = [];
-wall.push(new Rectangle(100, 50, 10, 10, "#999"));
-wall.push(new Rectangle(100, 100, 10, 10, "#999"));
-wall.push(new Rectangle(200, 50, 10, 10, "#999"));
+wall.push(new Rectangle(400, 50, 10, 10, "#999"));
+//wall.push(new Rectangle(100, 100, 10, 10, "#999"));
+wall.push(new Rectangle(300, 175, 10, 10, "#999"));
 wall.push(new Rectangle(200, 100, 10, 10, "#999"));
+wall.push(new Rectangle(200, 400, 10, 10, "#999"));
+wall.push(new Rectangle(200, 100, 10, 10, "#999"));
+
+function canPlayOgg() {
+  var aud = new Audio();
+
+  if (aud.canPlayType("audio/ogg").replace(/no/, "")) return true;
+  else return false;
+}
+if (canPlayOgg()) {
+  aComer.src = "sounds/chomp.ogg";
+  aMorir.src = "sounds/dies.ogg";
+} else {
+  aComer.src = "sounds/chomp.m4a";
+  aMorir.src = "sounds/dies.m4a";
+}
 function Rectangle(x, y, width, height, color) {
   this.x = x == null ? 0 : x;
   this.y = y == null ? 0 : y;
@@ -117,14 +145,20 @@ function act() {
         gameover = true;
       }
     }
+    for (var i = 0, l = wall.length; i < l; i++) {
+      wall[i].fill(lienzo);
+      
+    }
 
     for (var i = 0; i < wall.length; i++) {
       if (food.intersects(wall[i])) {
+        aMorir.play();
         food.x = random(canvas.width / 10 - 1) * 10;
         food.y = random(canvas.height / 10 - 1) * 10;
       }
       if (body[0].intersects(wall[i])) {
         gameover = true;
+        aMorir.play();
       }
     }
     if (gameover || lastPress == KEY_ENTER) {
@@ -135,6 +169,7 @@ function act() {
       food.x = random(canvas.width / 10 - 1) * 10;
       food.y = random(canvas.height / 10 - 1) * 10;
       body.push(new Rectangle(0,0,10,10, "#0f0"));
+      aComer.play();
     }
   }
   if (lastPress == KEY_P) {
@@ -156,14 +191,16 @@ function paint(lienzo) {
   lienzo.fillStyle = "#0f0";
   //body[0].fill(lienzo);
   //lienzo.fillRect(x,y,10,10);
-  for (var i = 0; i < body.length; i++) {
-    body[i].fill(lienzo);
-  }
+  
+  //for (var i = 0; i < body.length; i++) {
+   // body[i].fill(lienzo);
+ // }
 
-  food.fill(lienzo);
+  //food.fill(lienzo);
   lienzo.fillText("Score: " + score, 10, 40);
   for (var i = 0, l = wall.length; i < l; i++) {
     wall[i].fill(lienzo);
+    
   }
 
   if (pause) {
@@ -175,6 +212,13 @@ function paint(lienzo) {
   if (gameover) {
     if (gameover) lienzo.fillText("GAME OVER", 150, 75);
     else lienzo.fillText("PAUSE", 150, 75);
+  }
+  for (var i = 0; i < body.length; i++) {
+    lienzo.drawImage(iBody, body[i].x, body[i].y);
+  }
+  lienzo.drawImage(iFood, food.x, food.y);
+  for (var i = 0, l = wall.length; i < l; i++) {
+    lienzo.drawImage(iWall, wall[i].x, wall[i].y);
   }
 }
 
